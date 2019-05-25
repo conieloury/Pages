@@ -1,0 +1,317 @@
+﻿<!doctype html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <link rel="shortcut icon" type="image/x-icon" href="171.png">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ghost sample</title>
+    <link media="all" rel="stylesheet" href="css/bootstrap.css">
+    <link media="all" rel="stylesheet" href="css/mysite.css">
+    <script src="js/jquery-3.0.0.min.js" type="text/javascript"></script>
+    <script src="js/bootstrap.js" type="text/javascript"></script>
+    <script src="js/npm.js" type="text/javascript"></script>
+    <style type="text/css">
+        .shell {
+            position: absolute;
+            z-index: 1001;
+            top: 100px;
+            right: 300px;
+        }
+
+        img.ukagaka {
+            width: 120px;
+        }
+
+        img.shell {
+        }
+
+        .balloon {
+            position: absolute;
+            top: -10px;
+            left: 150px;
+            z-index: 1000;
+            width: 150px;
+            height: auto;
+            background: rgba(4,43,20,.5);
+            color: white;
+            padding: 10px;
+            border-radius: 10px;
+            /*outline:1px solid #17352d;*/
+            /*outline-offset:5px;*/
+        }
+
+            .balloon a {
+                color: #b8c7c3;
+            }
+
+            .balloon:before {
+                content: '';
+                position: absolute;
+                top: 16px;
+                right: 100%;
+                height: 0;
+                width: 0;
+                border: 7px solid transparent;
+                border-right: 7px solid rgba(4,43,20,.5);
+            }
+    </style>
+</head>
+<body>
+    <div class="shell" id="ghost">
+        <img class="ukagaka" id="shell" src="img/uka.png" />
+        <div class="balloon" id="menu" style="display: none">
+            <input id="is_menu" value="off" style="display: none" />
+            Menu<br />
+            <br />
+            <a href="#" id="change_ghost">changeghost</a><a id="change_position">position</a><br />
+            <a href="#" id="balloon_close">close</a>
+        </div>
+        <div class="balloon" id="balloon">
+            <div id="talk"></div>
+        </div>
+    </div>
+
+    <div class="container">
+        <p>
+            <h4>网页人格示例</h4>
+            本页代码可无授权使用，仅限代码部分，图片部分只做范例使用。<br />
+            粘贴后，请确保样式名称和函数名称与原本站点或页面没有冲突。<br />
+            本地测试时请开启cookies<br />
+            代码打包下载地址：<a href="#">点我下载</a><br />
+            现有功能：拖拽、自由移动，保持在x轴中水平移动。
+            双击开启菜单、更换shell。
+        </p>
+    </div>
+</body>
+<script type="text/javascript">
+    //设置菜单，要显示在菜单里的文字、选项等等
+    var list = "<a onclick=\"change('img/uka.png');\" href=\"#\">hiiragi</a><a href=\"#\" onclick=\"change('img/shell.png');\">page</a>"
+
+        + "<a href=\"#\" onclick=\"balloon_break()\">close</a>";
+    var is_menu = 0;//是否正在显示菜单，显示菜单时隐藏对话。
+    var position = "free";//默认人格位置
+
+    stroke_counter = 0;
+
+    //设置对话，目前只有第一个array可以用（迷），序号需要人工填写，但顺序是随机的
+    hiiragi_talk = new Array();
+    hiiragi_talk[0] = "这是一句对话";
+    hiiragi_talk[1] = "通过修改代码可以修改间隔时间";
+    hiiragi_talk[2] = "可以插入样式与链接";
+    hiiragi_talk[3] = "可以自由修改代码以配合你的页面";
+
+    page_talk = new Array();
+    page_talk[0] = "pagespeaking";
+    page_talk[1] = "pages";
+
+
+    function init() {
+        talk();
+    }
+    //function stroke() {//触摸反应计数器
+    //  stroke_counter++;
+    //if (stroke_counter > 50) {
+    //  stroke_counter = 0;
+    //talk("stroke");
+    //}
+    //}
+    function stroke_reset() {
+        stroke_counter = 0;
+    }
+    function talk() {
+        var url = $(".ukagaka").attr("src");
+        talk(url);
+    }
+    function talk(option) {
+        if (option == "img/page.png") {
+            check_talk(page_talk[Math.floor(Math.random() * page_talk.length)]);
+        } else {
+            check_talk(hiiragi_talk[Math.floor(Math.random() * hiiragi_talk.length)]);
+        }
+    }
+    function check_talk(str) {
+        text = str.replace(/#\[(.+)\]/g, "");
+        show_balloon(text);
+    }
+
+    var timer_randomtalk, timer_hide_balloon;
+    function show_balloon(str) {
+        clearTimeout(timer_randomtalk);
+        clearTimeout(timer_hide_balloon);
+        if (is_menu != 1) {
+            document.getElementById("talk").innerHTML = str;
+            $("#balloon").show(1000);
+
+        }
+        timer_hide_balloon = setTimeout("hide_balloon()", 5000);//文字显示的时间
+    }
+    function hide_balloon(str) {
+        clearTimeout(timer_hide_balloon);
+        $("#balloon").hide(1000);
+        timer_randomtalk = setTimeout("talk()", 6000);//对话间隔时间
+    }
+    //这上面的部分除了时间可以更改之外其它最好不要动
+
+    function change(url) {
+        $(".ukagaka").attr("src", url);
+        setCookie("shell", url);
+        //document.getElementsById("ukagaka").src = url;
+    }
+    function showmenu() {
+        $(".balloon").html("something to say<br /><br /><a href=\"#\" id=\"change_ghost\">change</a><br /><a href=\"#\" id=\"balloon\">close</a>");
+    }
+    function balloon_break() {
+
+        is_menu = 0;
+        $(".balloon").hide(1000);
+        $(".balloon").html("Menu<br /><br /><a href=\"#\" onclick=\"ChangeGhost()\">changes shell</a><a onclick=\"ChangePosition()\">position</a><br /><a href=\"#\" onclick=\"balloon_break()\">close</a>");
+    }
+
+    function ChangeGhost() {//显示菜单的函数……菜单的变量就在开头，如果不想写变量可以像后面那样直接写
+        $(".balloon").html(list);
+    }
+    function ChangePosition() {
+        $(".balloon").html("<a onclick=\"setghostfree();\">free</a><a onclick=\"setghostbottom();\">bottom</a><a onclick=\"balloon_break()\">close</a>");
+    }
+    //可拖动模块初始化，不需要做更改，如果看不懂的话。
+    var rDrag = {
+        o: null,
+        init: function (o) {
+            o.onmousedown = this.start;
+        },
+        start: function (e) {
+            var o;
+            e = rDrag.fixEvent(e);
+            e.preventDefault && e.preventDefault();
+            rDrag.o = o = this;
+            o.x = e.clientX - rDrag.o.offsetLeft;
+            if (position == "free") {
+                o.y = e.clientY - rDrag.o.offsetTop;
+            }
+            document.onmousemove = rDrag.move;
+            document.onmouseup = rDrag.end;
+        },
+        move: function (e) {
+            e = rDrag.fixEvent(e);
+            var oLeft, oTop;
+            oLeft = e.clientX - rDrag.o.x;
+            if (position == "free") {
+                oTop = e.clientY - rDrag.o.y;
+            }
+            rDrag.o.style.left = oLeft + 'px';
+            rDrag.o.style.top = oTop + 'px';
+        },
+        end: function (e) {
+            e = rDrag.fixEvent(e);
+            rDrag.o = document.onmousemove = document.onmouseup = null;
+        },
+        fixEvent: function (e) {
+            if (!e) {
+                e = window.event;
+                e.target = e.srcElement;
+                e.layerX = e.offsetX;
+                if (position == "free") {
+                    e.layerY = e.offsetY;
+                }
+            }
+            return e;
+        }
+    }
+    //页面加载时执行，进行一些初始化操作，不用动
+    window.onload = function () {
+        var obj = document.getElementById('ghost');
+        rDrag.init(obj);
+        init();
+    }
+    //移动shell到屏幕最底端…………应该是，然而现在没实现ry
+    function setghostbottom() {
+        //var windowHeight = $(window).height();
+        //var dot = $("#ghost").offset();
+        // console.log(windowHeight+"+"+ dot.offsetTop);
+        //var long = parseInt(windowHeight) - parseInt(dot) - 100;
+        $("#ghost").animate({
+            top: '500px'
+        });
+        //.move( parseInt( windowHeight)-parseInt(dotY)-100,$("#ghost").offsetX);
+        // document.getElementById('ghost').style.bottom = "0px";
+        position = "bottom";
+    }
+    //放飞人格（不是），可以自由移动的开关
+    function setghostfree() {
+        position = "free";
+    }
+    //页面加载后执行，主要是jq操作
+    $(document).ready(function () {
+        var shell = getCookie("shell");
+        if (shell == null) {
+            $(".ukagaka").attr("src", "img/uka.png");
+        } else {
+            $(".ukagaka").attr("src", shell);
+        }
+        //隐藏与双击显示对话框
+        $("#balloon_close").click(function () {
+            //$("#is_menu").val("off");
+            is_menu = 0;
+            console.log(is_menu);
+            $(".balloon").hide(1000);
+        });
+        $(".ukagaka").dblclick(function () {
+            //$("#is_menu").val("on");
+            is_menu = 1;
+            $("#menu").show(1000);
+            $("#balloon").hide();
+        });
+        //切换人格
+        $("#change_ghost").click(function () {
+            //$("#menu").empty();
+            $("#is_menu").val("on");
+            $("#menu").html(list);
+        });
+        $("#change_position").click(function () {
+            $("#menu").html("<a onclick=\"setghostfree();\">free</a><a onclick=\"setghostbottom();\">bottom</a><a onclick=\"balloon_break()\">close</a>");
+        });
+    });
+
+    //计划开发项：
+    //记录人格位置，固定方式。
+    //切换对话
+
+    //写cookies
+    function setCookie(name, value) {
+        var Days = 30;
+        var exp = new Date();
+        exp.setTime(exp.getTime() + Days * 24 * 60 * 60 * 1000);
+        document.cookie = name + "=" + escape(value) + ";expires=" + exp.toGMTString();
+    }
+
+    //读取cookies 
+    function getCookie(name) {
+        var arr, reg = new RegExp("(^| )" + name + "=([^;]*)(;|$)");
+
+        if (arr = document.cookie.match(reg)) return unescape(arr[2]);
+        else return null;
+    }
+
+    //删除cookies 
+    function delCookie(name) {
+        var exp = new Date();
+        exp.setTime(exp.getTime() - 1);
+        var cval = getCookie(name);
+        if (cval != null) document.cookie = name + "=" + cval + ";expires=" + exp.toGMTString();
+    }
+    function initAnchors() {
+        new SmoothScroll({
+            anchorLinks: '.nav > li > a',
+            extraOffset: function () {
+                var totalHeight = 0;
+                jQuery('.navbar-fixed-top').each(function () {
+                    totalHeight += jQuery(this).outerHeight();
+                });
+                return totalHeight;
+            },
+            activeClasses: 'link'
+        });
+    }
+</script>
+</html>
