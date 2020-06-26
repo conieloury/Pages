@@ -920,7 +920,7 @@ a {
 }
 a:hover,
 a:focus {
-  color: #2a6496;
+  color: #dbe9b7;
   text-decoration: underline;
 }
 a:focus {
@@ -3689,7 +3689,7 @@ select[multiple].input-group-sm > .input-group-btn > .btn {
 .nav > li > a:hover,
 .nav > li > a:focus {
   text-decoration: none;
-  background-color: #eee;
+  background-color: transparent;
 }
 .nav > li.disabled > a {
   color: #777;
@@ -3704,7 +3704,7 @@ select[multiple].input-group-sm > .input-group-btn > .btn {
 .nav .open > a,
 .nav .open > a:hover,
 .nav .open > a:focus {
-  background-color: #eee;
+  background-color: transparent;
   border-color: #428bca;
 }
 .nav .nav-divider {
@@ -3976,7 +3976,6 @@ select[multiple].input-group-sm > .input-group-btn > .btn {
   border-width: 1px 0 0;
 }
 .navbar-brand {
-  float: left;
   height: 50px;
   padding: 15px 15px;
   font-size: 18px;
@@ -4026,6 +4025,8 @@ select[multiple].input-group-sm > .input-group-btn > .btn {
 }
 .navbar-nav {
   margin: 7.5px -15px;
+    float: none;
+    text-align:center;
 }
 .navbar-nav > li > a {
   padding-top: 10px;
@@ -4059,9 +4060,12 @@ select[multiple].input-group-sm > .input-group-btn > .btn {
   .navbar-nav {
     float: left;
     margin: 0;
+
   }
   .navbar-nav > li {
-    float: left;
+    float:none;
+        display: inline-block;
+        margin: 0em;
   }
   .navbar-nav > li > a {
     padding-top: 15px;
@@ -4194,8 +4198,8 @@ select[multiple].input-group-sm > .input-group-btn > .btn {
   }
 }
 .navbar-default {
-  background-color: #dbe9b7;
-  border-color: #b8b2a6;
+  background-color:transparent;
+  border-color: transparent;
 }
 .navbar-default .navbar-brand {
   color: #777;
@@ -5321,8 +5325,8 @@ a.list-group-item-danger.active:focus {
 }
 .panel-default > .panel-heading {
   color: #333;
-  background-color: #f5f5f5;
-  border-color: #ddd;
+  background-color: #dbe9b7;
+  border-color:  #dbe9b7;
 }
 .panel-default > .panel-heading + .panel-collapse > .panel-body {
   border-top-color: #ddd;
