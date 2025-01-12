@@ -6,36 +6,35 @@
     <link rel="shortcut icon" type="image/x-icon" href="171.png">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>sweet drop</title>
-    <link media="all" rel="stylesheet" href="../css/bootstrap.css">
-    <link media="all" rel="stylesheet" href="../css/mysite.css">
-    <script src="../js/jquery-3.0.0.min.js" type="text/javascript"></script>
-    <script src="../js/bootstrap.js" type="text/javascript"></script>
+  <link href="../fonts/font-awesome.min.css" rel="stylesheet" type="text/css">
+  <link href="../fonts/iconmoon.css" rel="stylesheet" type="text/css">
+  <!-- Loading main css file -->
+  <link rel="stylesheet" href="../style.css">
 
 </head>
 <body>
-<header>
-     <div class="container">
-     <div class="navbar-collapse collapse" style="text-align: center;">
-         <ul class="nav navbar-nav" style="display: inline-block;float: none;">
-             <li class="li-pages">	          
-     			<a href="../ukagaka/ghost.html" >Ukagaka </a>			
-             </li>
-            <li class="li-pages">
-                <a class="navbar-brand" href="index.html" style="color: #dbe9b7;">Books</a>
-             </li>
-            <li class="li-pages">
-                <a  href="../index.html" >Home</a></li>
-             </li>
-     		<li class="li-pages"><a href="../links.html">Links</a></li>
-     	<li class="li-pages">
-     		<a href="../games/index.html" >Games </a>   
-     		  </li>
-         </ul>
-     </div>
-     
-     
-     	</div>
-    </header>
+<header class="site-header">
+				<div class="container">
+					<a href="index.html" id="branding" class="pull-left">
+						
+						<h1 class="site-title">Home</h1>
+					</a>
+					<!-- Default snippet for navigation -->
+					<div class="main-navigation pull-right">
+						<button type="button" class="menu-toggle"><i class="fa fa-bars"></i></button>
+						<ul class="menu">
+							<li class="menu-item"><a href="../ukagaka/ghost.html">Ukagaka</a></li>
+							<li class="menu-item current-menu-item"><a href="index.html">Novel</a></li>
+							<li class="menu-item"><a href="../links.html">Link</a></li>
+							<li class="menu-item"><a href="../games/index.html">Game</a></li>
+							<li class="menu-item"><a href="../downloads/index.html">Downloads</a></li>
+						</ul> <!-- .menu -->
+					</div> <!-- .main-navigation -->
+
+					<div class="mobile-navigation"></div>
+				</div>
+			</header>
+
     <div class="container">
 
    
@@ -228,18 +227,24 @@
 “我会”尼禄的气息有些不稳，但还是努力大声地、坚定地讲了：“我会成为王的”
 </p><p>
 “我知道”维吉尔露出了微笑。
-  <footer >
-      <p>by<a href="http://conieloury.uiue.me">七海由枝</a> </p>
-      <p>
-        <a href="#">回到开头</a>
-      </p>
-       <p>
-        <a href="index.html">返回列表</a>
-      </p>
-    </footer>
+
 </div>
   
-
+<footer class="site-footer">
+				<div class="container">
+						<figure><img src="../images/thumbnail.gif" alt="pagebaner"></figure>
+					<nav class="footer-navigation">
+						<a href="../ukagaka/ghost.html">Ukagaka</a>
+						<a href="index.html">Novel</a>
+						<a href="../links.html">Link</a>
+						<a href="../games/index.html">Game</a>
+						<a href="../downloads/index.html">Downloads</a>
+					</nav>
+					<div class="colophon">
+						<p>Copyright 2020 Coineloury. Designed by Themezy. </p>
+					</div>
+				</div>
+			</footer>
 
     <!-- Bootstrap core JavaScript
     ================================================== -->
